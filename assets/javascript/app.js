@@ -8,6 +8,17 @@ var questions = [
     question: "What is the ticker symbol for the Ford Motor Company?",
     answer: ["FORD", "FRD", "F", "FD", "CAR"],
     correctAnswer: "3"
+  },
+  {
+    question: "Who is the crazy fool in charge of Tesla?",
+    answer: [
+      "Richard Nixon",
+      "Jeff Bezos",
+      "Jim Cramer",
+      "Elon Musk",
+      "John Smith"
+    ],
+    correctAnswer: "4"
   }
 ];
 
@@ -17,11 +28,12 @@ var game = {
   wrongAnswer: 0,
   seconds: 30,
   question: 0,
+  isAnswerSelected: false,
   reset: function() {
     $("h3").css("display", "block");
     $(".start-button").css("display", "none");
-    this.question = 0;
-    this.seconds = 30;
+    game.question = 0;
+    game.seconds = 30;
   },
   startCountDown: function() {
     $("#seconds").text(game.seconds);
@@ -33,37 +45,45 @@ var game = {
     }
   },
   startQuestions: function() {
-    if (this.question === questions.length) {
+    game.isAnswerSelected = false;
+    console.log(game.question);
+    if (game.question === questions.length) {
       gameOver();
     }
-    $(".question").text(questions[this.question].question);
-    $("#1").text(questions[this.question].answer[0]);
-    $("#2").text(questions[this.question].answer[1]);
-    $("#3").text(questions[this.question].answer[2]);
-    $("#4").text(questions[this.question].answer[3]);
-    $("#5").text(questions[this.question].answer[4]);
+    $(".question").text(questions[game.question].question);
+    $("#1").text(questions[game.question].answer[0]);
+    $("#2").text(questions[game.question].answer[1]);
+    $("#3").text(questions[game.question].answer[2]);
+    $("#4").text(questions[game.question].answer[3]);
+    $("#5").text(questions[game.question].answer[4]);
   },
   feedback: function(guess) {
-    // in each, update question
-    if (guess === "0") {
-      // Update variable holding timeouts
-      $(".feedback").text(
-        "Time is up. The correct answer was " +
-          questions[this.question].answer[
-            parseInt(questions[this.question].correctAnswer) - 1
-          ]
-      );
-    } else if (guess === questions[this.question].correctAnswer) {
-      this.rightAnswer++;
-      $(".feedback").text("You are correct!");
-    } else {
-      this.wrongAnswer++;
-      $(".feedback").text(
-        "Wrong answer.  The correct answer was " +
-          questions[this.question].answer[
-            parseInt(questions[this.question].correctAnswer) - 1
-          ]
-      );
+    if (!game.isAnswerSelected) {
+      game.isAnswerSelected = true;
+
+      if (guess === "0") {
+        // Update variable holding timeouts
+        $(".feedback").text(
+          "Time is up. The correct answer was " +
+            questions[game.question].answer[
+              parseInt(questions[game.question].correctAnswer) - 1
+            ]
+        );
+      } else if (guess === questions[game.question].correctAnswer) {
+        game.rightAnswer++;
+        $(".feedback").text("You are correct!");
+      } else {
+        game.wrongAnswer++;
+        $(".feedback").text(
+          "Wrong answer.  The correct answer was " +
+            questions[game.question].answer[
+              parseInt(questions[game.question].correctAnswer) - 1
+            ]
+        );
+      }
+      game.question = game.question + 1;
+      setTimeout(game.startQuestions, 5000);
+      setTimeout(game.startCountDown, 5000);
     }
   },
   gameOver: function() {
