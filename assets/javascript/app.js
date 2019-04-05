@@ -19,6 +19,40 @@ var questions = [
       "John Smith"
     ],
     correctAnswer: "4"
+  },
+  {
+    question:
+      "What publicly traded company hit the 1 Trillion dollar market cap first?",
+    answer: ["Amazon", "Microsoft", "Goldman Sachs", "Apple", "Alphabet"],
+    correctAnswer: "4"
+  },
+  {
+    question: "Which company held the original patent to cookies?",
+    answer: ["IBM", "Zerox", "Apple", "Netscape", "Google"],
+    correctAnswer: "4"
+  },
+  {
+    question: "What is the ticker symbol for Microsoft?",
+    answer: ["M", "MSOFT", "MT", "MS", "MSFT"],
+    correctAnswer: "5"
+  },
+  {
+    question:
+      "If advertising revenue were to dry up, which company would suffer the most revenue loss?",
+    answer: ["General Electric", "Apple", "Facebook", "Qualcomm", "Pepsi"],
+    correctAnswer: "3"
+  },
+  {
+    question:
+      "What type of distribution curve describes stock price moves of the S&P 500?",
+    answer: [
+      "Leptokurtic",
+      "Mesokurtic",
+      "Normal",
+      "Platykurtic",
+      "Fat Tailed"
+    ],
+    correctAnswer: "1"
   }
 ];
 
