@@ -34,6 +34,8 @@ var game = {
     $(".start-button").css("display", "none");
     game.question = 0;
     game.seconds = 30;
+    game.rightAnswer = 0;
+    game.wrongAnswer = 0;
   },
   startCountDown: function() {
     $("#seconds").text(game.seconds);
@@ -46,23 +48,26 @@ var game = {
   },
   startQuestions: function() {
     game.isAnswerSelected = false;
-    console.log(game.question);
+    game.seconds = 30;
+    $(".feedback").text("");
+    console.log(game.question + " : " + questions.length);
     if (game.question === questions.length) {
-      gameOver();
+      game.gameOver();
+    } else {
+      game.startCountDown();
+      $(".question").text(questions[game.question].question);
+      $("#1").text(questions[game.question].answer[0]);
+      $("#2").text(questions[game.question].answer[1]);
+      $("#3").text(questions[game.question].answer[2]);
+      $("#4").text(questions[game.question].answer[3]);
+      $("#5").text(questions[game.question].answer[4]);
     }
-    $(".question").text(questions[game.question].question);
-    $("#1").text(questions[game.question].answer[0]);
-    $("#2").text(questions[game.question].answer[1]);
-    $("#3").text(questions[game.question].answer[2]);
-    $("#4").text(questions[game.question].answer[3]);
-    $("#5").text(questions[game.question].answer[4]);
   },
   feedback: function(guess) {
     if (!game.isAnswerSelected) {
       game.isAnswerSelected = true;
 
       if (guess === "0") {
-        // Update variable holding timeouts
         $(".feedback").text(
           "Time is up. The correct answer was " +
             questions[game.question].answer[
@@ -83,20 +88,32 @@ var game = {
       }
       game.question = game.question + 1;
       setTimeout(game.startQuestions, 5000);
-      setTimeout(game.startCountDown, 5000);
     }
   },
   gameOver: function() {
-    //Display score
-    //Wait 5 seconds
-    //Clear Screen
-    //Display start button
+    clearInterval(countDown);
+    $(".question").text("");
+    $("#1").text("");
+    $("#2").text("");
+    $("#3").text("");
+    $("#4").text("");
+    $("#5").text("");
+    $(".feedback").text(
+      game.rightAnswer +
+        " correct answers and " +
+        game.wrongAnswer +
+        " wrong answers."
+    );
+    $("h3").css("display", "none");
+    $(".start-button").css("display", "block");
+    $(".start-button").text("Restart Game");
   }
 };
 
+// Main program starts here
+
 $(".start-button").on("click", function() {
   game.reset();
-  game.startCountDown();
   game.startQuestions();
 });
 
