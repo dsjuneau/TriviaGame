@@ -7,7 +7,8 @@ var questions = [
   {
     question: "What is the ticker symbol for the Ford Motor Company?",
     answer: ["FORD", "FRD", "F", "FD", "CAR"],
-    correctAnswer: "3"
+    correctAnswer: "3",
+    gif: "ford.webp"
   },
   {
     question: "Who is the crazy fool in charge of Tesla?",
@@ -18,29 +19,34 @@ var questions = [
       "Elon Musk",
       "John Smith"
     ],
-    correctAnswer: "4"
+    correctAnswer: "4",
+    gif: "musk.webp"
   },
   {
     question:
       "What publicly traded company hit the 1 Trillion dollar market cap first?",
     answer: ["Amazon", "Microsoft", "Goldman Sachs", "Apple", "Alphabet"],
-    correctAnswer: "4"
+    correctAnswer: "4",
+    gif: "apple.webp"
   },
   {
     question: "Which company held the original patent to cookies?",
     answer: ["IBM", "Zerox", "Apple", "Netscape", "Google"],
-    correctAnswer: "4"
+    correctAnswer: "4",
+    gif: "netscape.webp"
   },
   {
     question: "What is the ticker symbol for Microsoft?",
     answer: ["M", "MSOFT", "MT", "MS", "MSFT"],
-    correctAnswer: "5"
+    correctAnswer: "5",
+    gif: "microsoft.webp"
   },
   {
     question:
       "If advertising revenue were to dry up, which company would suffer the most revenue loss?",
     answer: ["General Electric", "Apple", "Facebook", "Qualcomm", "Pepsi"],
-    correctAnswer: "3"
+    correctAnswer: "3",
+    gif: "facebook.webp"
   },
   {
     question:
@@ -52,7 +58,8 @@ var questions = [
       "Platykurtic",
       "Fat Tailed"
     ],
-    correctAnswer: "1"
+    correctAnswer: "1",
+    gif: "leptokurtic.webp"
   }
 ];
 
@@ -84,11 +91,11 @@ var game = {
     game.isAnswerSelected = false;
     game.seconds = 30;
     $(".feedback").text("");
-    console.log(game.question + " : " + questions.length);
     if (game.question === questions.length) {
       game.gameOver();
     } else {
       game.startCountDown();
+      $("#gif").attr("src", "");
       $(".question").text(questions[game.question].question);
       $("#1").text(questions[game.question].answer[0]);
       $("#2").text(questions[game.question].answer[1]);
@@ -120,6 +127,8 @@ var game = {
             ]
         );
       }
+      var gif = "assets/images/" + questions[game.question].gif;
+      $("#gif").attr("src", gif);
       game.question = game.question + 1;
       setTimeout(game.startQuestions, 5000);
     }
